@@ -2,23 +2,20 @@
 
 TraxWebプロジェクトのフォルダおよびファイル構成について説明します。
 
-## ルートディレクトリ (`TraxWeb/`)
+## ソースコード (`TraxWeb/src/`)
 
-| ファイル/フォルダ | 説明 |
+| ファイル | 説明 |
 | :--- | :--- |
 | `index.html` | アプリケーションのエントリーポイント。HTML構造を定義。 |
 | `style.css` | アプリケーションのスタイルシート。Vanilla CSSで記述。 |
 | `script.js` | ゲームロジック、AI、UI操作を含む主要なJavaScriptファイル。 |
-| `package.json` | プロジェクトの依存関係（Jest, Playwright等）とスクリプト定義。 |
-| `playwright.config.js` | Playwright（E2Eテスト）の設定ファイル。 |
-| `README.md` | プロジェクトの概要とセットアップ手順（ルートのREADMEとは異なる場合がある）。 |
 
-## テスト (`TraxWeb/`)
+## テスト (`TraxWeb/tests/`)
 
-| ファイル | 説明 |
+| フォルダ | 説明 |
 | :--- | :--- |
-| `TraxAI.test.js` | AIロジック（`TraxAI` クラス）のユニットテスト（Jest）。 |
-| `TraxBoard.test.js` | 盤面ロジック（`TraxBoard` クラス）のユニットテスト（Jest）。 |
+| `unit/` | Jestを使用したユニットテスト（`TraxAI.test.js`, `TraxBoard.test.js`）。 |
+| `e2e/` | Playwrightを使用したE2Eテストスクリプト。 |
 
 ## ドキュメント (`TraxWeb/docs/`)
 
@@ -30,14 +27,12 @@ TraxWebプロジェクトのフォルダおよびファイル構成について�
 | `directory_structure.md` | **本書**。フォルダ構成の説明。 |
 | `images/` | ドキュメント内で使用される画像リソース（スクリーンショット等）。 |
 
-## E2Eテスト (`TraxWeb/e2e/`)
-
-Playwrightを使用したE2Eテストスクリプトが格納されています。
-
 ## その他
 
-| フォルダ | 説明 |
+| ファイル/フォルダ | 説明 |
 | :--- | :--- |
+| `package.json` | プロジェクトの依存関係とスクリプト定義。 |
+| `playwright.config.js` | Playwrightの設定ファイル。`tests/e2e` を参照。 |
 | `node_modules/` | npm パッケージのインストール先。 |
-| `screenshots/` | テスト実行時や手動で取得したスクリーンショットの保存先。 |
+| `screenshots/` | E2Eテストの実行結果やスクリーンショットの保存先（設定による）。 |
 | `test-results/` | Playwright テストの実行結果レポート。 |

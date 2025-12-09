@@ -1,9 +1,9 @@
 const { defineConfig } = require('@playwright/test');
 
 module.exports = defineConfig({
-    testDir: './e2e',
+    testDir: './tests/e2e',
     webServer: {
-        command: 'npx http-server -p 8080',
+        command: 'npx http-server ./src -p 8080',
         port: 8080,
         reuseExistingServer: !process.env.CI,
     },

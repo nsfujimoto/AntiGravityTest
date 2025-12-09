@@ -5,7 +5,7 @@ const {
     VERTICAL_W,
     WHITE,
     RED
-} = require('./script');
+} = require('../../src/script');
 
 describe('TraxAI', () => {
     let ai;

@@ -11,7 +11,7 @@ const {
     LOWER_LEFT_W,
     WHITE,
     RED
-} = require('./script');
+} = require('../../src/script');
 
 describe('TraxBoard', () => {
     let board;
