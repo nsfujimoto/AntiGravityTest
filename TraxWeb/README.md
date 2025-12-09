@@ -1,24 +1,63 @@
 # Trax Web
 
-This is a web-based implementation of the Trax strategy game, ported from the C# version.
+C#版Trax戦略ゲームWeb移植版です。
+JavaScriptによるAIプレイヤーとの対戦機能も搭載しています。
 
-## How to Play
-1. Open `index.html` in a modern web browser.
-2. **White** moves first.
-3. Click on an empty cell to place a tile.
-   - On the first turn, you can click anywhere (usually the center).
-   - On subsequent turns, you must place a tile adjacent to an existing tile.
-4. Select the tile orientation from the popup menu.
-5. **Forced Moves**: If a move creates a connection where two paths of the same color enter a single empty cell, a tile is automatically placed to connect them. This can trigger a chain reaction.
-6. **Illegal Moves**: If a move (or resulting forced move) creates a situation where 3 or more paths of the same color enter a single cell, the move is illegal and cannot be played.
-7. **Winning**:
-   - Create a closed loop of your color.
-   - Create a continuous line of your color that spans at least 8 rows or columns.
+## 遊び方 / 操作方法
 
-## Development
-- `index.html`: Main entry point.
-- `style.css`: Styles for the board and tiles.
-- `script.js`: Game logic and rendering.
+1.  最新のWebブラウザで `index.html` を開きます。
+2.  **白（White）** が先手です。
 
-## Rules
-See [Trax Rules](https://en.wikipedia.org/wiki/Trax_(game)) for more details.
+### タイルの配置
+空いているセルをクリックすると、タイルを配置できます。
+-   最初の手番では、任意の場所（通常は中央）をクリックできます。
+![初期盤面](./docs/images/initial_board.png)
+
+-   2手目以降は、既存のタイルに隣接する場所に配置する必要があります。
+
+### タイルの向き選択
+セルをクリックすると、配置可能なタイルの向きを選択するポップアップが表示されます。配置したい向きをクリックしてください。
+![タイル選択](./docs/images/tile_selection.png)
+
+### 強制手（Forced Moves）への対応
+同じ色のパスが2つ、1つの空きセルに入り込むような配置になった場合、自動的にその空きセルに接続用のタイルが配置されます。これが連鎖的に発生することもあります。
+
+### 禁じ手（Illegal Moves）
+同じ色のパスが3つ以上、1つのセルに入り込むような配置（またはその結果生じる強制手）は「禁じ手」となり、そのような手は打てません。
+
+### 勝利条件
+-   自分の色の **閉じたループ** を作る。
+-   自分の色のパスを **8列または8行** 以上つなげる。
+
+## AI対戦（TraxAI）
+
+コンピュータプレイヤーと対戦できます。AIはアルファベータ法を用いたMiniMaxアルゴリズムで動作します。
+
+### AIの有効化
+画面上部の「Play vs AI」ボタンをクリックすることで、AIとの対戦をオン/オフできます。
+![AIコントロール](./docs/images/ai_controls.png)
+
+## 開発とテスト
+
+このプロジェクトは標準的なWeb技術（HTML, CSS, JS）で構築されており、テストには **Jest** と **Playwright** を使用しています。
+
+### セットアップとテスト実行
+
+1.  依存関係のインストール:
+    ```bash
+    npm install
+    ```
+
+2.  ユニットテスト (Jest) の実行:
+    ```bash
+    npm test
+    ```
+
+3.  E2Eテスト (Playwright) の実行:
+    ```bash
+    npm run test:e2e
+    ```
+
+## ルール詳細
+
+詳細は [Trax Rules (Wikipedia)](https://en.wikipedia.org/wiki/Trax_(game)) を参照してください。
