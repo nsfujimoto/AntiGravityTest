@@ -11,13 +11,13 @@ JavaScriptによるAIプレイヤーとの対戦機能も搭載しています�
 ### タイルの配置
 空いているセルをクリックすると、タイルを配置できます。
 -   最初の手番では、任意の場所（通常は中央）をクリックできます。
-![初期盤面](./docs/images/initial_board.png)
+![初期盤面](./TraxWeb/docs/images/initial_board.png)
 
 -   2手目以降は、既存のタイルに隣接する場所に配置する必要があります。
 
 ### タイルの向き選択
 セルをクリックすると、配置可能なタイルの向きを選択するポップアップが表示されます。配置したい向きをクリックしてください。
-![タイル選択](./docs/images/tile_selection.png)
+![タイル選択](./TraxWeb/docs/images/tile_selection.png)
 
 ### 強制手（Forced Moves）への対応
 同じ色のパスが2つ、1つの空きセルに入り込むような配置になった場合、自動的にその空きセルに接続用のタイルが配置されます。これが連鎖的に発生することもあります。
@@ -35,7 +35,7 @@ JavaScriptによるAIプレイヤーとの対戦機能も搭載しています�
 
 ### AIの有効化
 画面上部の「Play vs AI」ボタンをクリックすることで、AIとの対戦をオン/オフできます。
-![AIコントロール](./docs/images/ai_controls.png)
+![AIコントロール](./TraxWeb/docs/images/ai_controls.png)
 
 ## 開発とテスト
 
