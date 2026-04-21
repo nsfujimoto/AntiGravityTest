@@ -76,6 +76,45 @@ h1 {
     cursor: grabbing;
 }
 
+#notation-panel {
+    width: 100%;
+    max-height: 180px;
+    background-color: #2d2d2d;
+    border-top: 1px solid #444;
+    border-bottom: 1px solid #444;
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding: 10px 20px;
+}
+
+#notation-panel h2 {
+    margin: 0 0 8px 0;
+    font-size: 1rem;
+    color: #ccc;
+}
+
+#notation-list {
+    margin: 0;
+    padding-left: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    color: #ddd;
+}
+
+#notation-list li {
+    line-height: 1.4;
+}
+
+#notation-list li.forced-move {
+    color: #9fb4ff;
+}
+
+#notation-list li.manual-move {
+    color: #e8e8e8;
+}
+
 #board {
     display: grid;
     /* Grid columns/rows will be set in JS */

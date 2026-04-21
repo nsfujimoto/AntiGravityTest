@@ -433,6 +433,7 @@ class TraxGame {
         this.currentPlayer = WHITE;
         this.gameOver = false;
         this.moveHistory = [];
+        this.renderNotation();
         this.updateStatus();
 
         for (let y = 0; y < BMAX; y++) {
@@ -503,14 +504,25 @@ class TraxGame {
 
     attemptMove(x, y, tile) {
         const boardBackup = this.traxBoard.clone();
+        const moveColor = this.currentPlayer;
+        const moveNumber = this.moveHistory.filter(move => !move.forced).length + 1;
 
         try {
             this.traxBoard.placeTile(x, y, tile);
+            this.moveHistory.push({
+                moveNumber,
+                color: moveColor,
+                x,
+                y,
+                tile,
+                forced: false
+            });
 
-            if (!this.traxBoard.resolveForcedMoves()) {
+            if (!this.resolveForcedMovesWithHistory(moveColor, moveNumber)) {
                 throw new Error("Illegal move resulted from forced moves");
             }
 
+            this.renderNotation();
             this.render(); // Render move immediately
 
             if (this.traxBoard.checkWin(WHITE)) {
@@ -531,11 +543,51 @@ class TraxGame {
         } catch (e) {
             console.log("Move rejected: " + e.message);
             this.traxBoard = boardBackup;
+            this.moveHistory = this.moveHistory.filter((move) => move.moveNumber < moveNumber);
             if (!this.aiEnabled || this.currentPlayer !== this.aiColor) {
                 alert("Illegal Move: " + e.message);
             }
+            this.renderNotation();
             this.render();
         }
+    }
+
+    resolveForcedMovesWithHistory(moveColor, moveNumber) {
+        let placed = true;
+
+        while (placed) {
+            placed = false;
+
+            for (let y = this.traxBoard.minY - 1; y <= this.traxBoard.maxY + 1; y++) {
+                for (let x = this.traxBoard.minX - 1; x <= this.traxBoard.maxX + 1; x++) {
+                    if (this.traxBoard.board[y][x] === BLANK && this.traxBoard.isIllegalSpot(x, y)) {
+                        return false;
+                    }
+                }
+            }
+
+            for (let y = this.traxBoard.minY - 1; y <= this.traxBoard.maxY + 1; y++) {
+                for (let x = this.traxBoard.minX - 1; x <= this.traxBoard.maxX + 1; x++) {
+                    if (this.traxBoard.board[y][x] === BLANK) {
+                        const forcedTile = this.traxBoard.getForcedTile(x, y);
+                        if (forcedTile !== null) {
+                            this.traxBoard.placeTile(x, y, forcedTile);
+                            this.moveHistory.push({
+                                moveNumber,
+                                color: moveColor,
+                                x,
+                                y,
+                                tile: forcedTile,
+                                forced: true
+                            });
+                            placed = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return true;
     }
 
     makeAIMove() {
@@ -624,6 +676,43 @@ class TraxGame {
         const redPath = drawPath((~tile) & 0x0F, 'path-red');
 
         return `<svg viewBox="0 0 40 40">${redPath}${whitePath}</svg>`;
+    }
+
+    getCoordinateLabel(x, y) {
+        const boardX = x - CENTER;
+        const boardY = y - CENTER;
+        return `(${boardX >= 0 ? '+' : ''}${boardX}, ${boardY >= 0 ? '+' : ''}${boardY})`;
+    }
+
+    getTileLabel(tile) {
+        const tileLabels = {
+            [VERTICAL_W]: 'VERTICAL_W',
+            [HORIZONTAL_W]: 'HORIZONTAL_W',
+            [UPPER_LEFT_W]: 'UPPER_LEFT_W',
+            [LOWER_RIGHT_W]: 'LOWER_RIGHT_W',
+            [UPPER_RIGHT_W]: 'UPPER_RIGHT_W',
+            [LOWER_LEFT_W]: 'LOWER_LEFT_W'
+        };
+
+        return tileLabels[tile] || `TILE_${tile}`;
+    }
+
+    renderNotation() {
+        const notationList = document.getElementById('notation-list');
+        if (!notationList) return;
+
+        notationList.innerHTML = '';
+
+        this.moveHistory.forEach((move) => {
+            const item = document.createElement('li');
+            const colorLabel = move.color === WHITE ? 'White' : 'Red';
+            const forceLabel = move.forced ? ' (forced)' : '';
+            item.className = move.forced ? 'forced-move' : 'manual-move';
+            item.textContent = `${move.moveNumber}. ${colorLabel} ${this.getCoordinateLabel(move.x, move.y)} ${this.getTileLabel(move.tile)}${forceLabel}`;
+            notationList.appendChild(item);
+        });
+
+        notationList.scrollTop = notationList.scrollHeight;
     }
 }
 
