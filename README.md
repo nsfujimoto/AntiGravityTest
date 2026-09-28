@@ -2,6 +2,8 @@
 
 このリポジトリは、AntiGravityエージェントのテストおよび開発用プロジェクトです。
 
+rebase_test2
+
 ## プロジェクト構成
 
 ### [TraxWeb](./TraxWeb)
